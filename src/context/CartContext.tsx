@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { useInRouterContext, useNavigate } from 'react-router-dom';
+import { createContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { Api } from '../services/api';
 
 export const CartContext = createContext({} as ICartContext);
@@ -27,15 +27,14 @@ export const CardProvider = ({ children }: IDefaultProviderProps) => {
     try {
       const reponse = await Api.get('/products');
       setProduct(reponse.data);
-      console.log(reponse);
     } catch (error) {
-      console.log('toast');
+      toast.error('error na Api')
     }
   };
 
   useEffect(() => {
     listProduct();
-    console.log(product);
+    
   }, []);
 
   return (

@@ -1,8 +1,7 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Api } from '../services/api';
-
 
 export const UserContext = createContext({} as IUserContext);
 
@@ -22,6 +21,7 @@ interface IUserContext {
   UserLogin: (formData: ILoginFormValues) => Promise<void>;
   UserRegister: (formData: IRegisterFormValues) => Promise<void>;
   userLogout: () => void;
+  Token: string;
 }
 
 export interface IRegisterFormValues {
@@ -38,18 +38,23 @@ export interface ILoginFormValues {
 
 export const UserProvider = ({ children }: IDefaultProviderProps) => {
   const [user, setUser] = useState<IUser | null>(null);
-
+  const Token = localStorage.getItem('@Token')!;
   const navigate = useNavigate();
+  useEffect(() => {
+    if (Token) {
+      navigate('/shop');
+    }
+  }, []);
 
   const UserRegister = async (formData: IRegisterFormValues) => {
     try {
       const response = Api.post('/users', formData);
       setUser((await response).data.user);
       localStorage.setItem('@Token', (await response).data.accessToken);
-      toast.success('Registro feito com sucesso!')
+      toast.success('Registro feito com sucesso!');
       navigate('/');
     } catch (error) {
-      toast.error('Usúario já cadastrado')
+      toast.error('Usúario já cadastrado');
     }
   };
 
@@ -57,24 +62,24 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
     try {
       const response = Api.post('/login', formData);
       setUser((await response).data.user);
-      localStorage.setItem('@Token', (await response).data.accessToken)
+      localStorage.setItem('@Token', (await response).data.accessToken);
       toast.success('Login Realizado com sucesso!');
       navigate('/shop');
     } catch (error) {
-      toast.error('Email ou senha invalido')
+      toast.error('Email ou senha invalido');
     }
   };
 
   const userLogout = () => {
     setUser(null);
     localStorage.removeItem('@Token');
-    console.log("oi")
+    toast.success('Logout Realizado com sucesso!');
     navigate('/');
   };
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, UserLogin, UserRegister, userLogout }}
+      value={{ user, setUser, UserLogin, UserRegister, userLogout, Token }}
     >
       {children}
     </UserContext.Provider>

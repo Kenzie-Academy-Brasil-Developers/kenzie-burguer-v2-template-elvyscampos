@@ -25,12 +25,14 @@ const Header = () => {
               <button
                 type='button'
                 onClick={() => {
-                  userLogout();
+                  "userLogout();"
                 }}
               >
                 <MdShoppingCart size={28} />
               </button>
-              <button type='button'>
+              <button type='button' onClick={() => {
+                  userLogout();
+                }}>
                 <MdLogout size={28} />
               </button>
             </div>

@@ -3,6 +3,7 @@ import { CardProvider } from './context/CartContext';
 import { UserProvider } from './context/UserContext';
 import Router from './routes/routes';
 import { GlobalStyles } from './styles/global';
+import "react-toastify/dist/ReactToastify.css";
 
 
 const App = () => (
