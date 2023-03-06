@@ -1,10 +1,30 @@
-import Router from './routes';
+import { ToastContainer } from 'react-toastify';
+import { CardProvider } from './context/CartContext';
+import { UserProvider } from './context/UserContext';
+import Router from './routes/routes';
 import { GlobalStyles } from './styles/global';
+
 
 const App = () => (
   <>
+    <UserProvider>
+      <CardProvider>
+        <Router />
+      </CardProvider>
+    </UserProvider>
     <GlobalStyles />
-    <Router />
+    <ToastContainer
+          position='top-right'
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme='light'
+        />
   </>
 );
 

@@ -1,8 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import ShopPage from './pages/ShopPage';
+import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage';
+import ShopPage from '../pages/ShopPage';
 
+// eslint-disable-next-line arrow-body-style
 const Router = () => {
   return (
     <Routes>
@@ -12,7 +13,5 @@ const Router = () => {
     </Routes>
   );
 };
-
-
 
 export default Router;
